@@ -5,13 +5,13 @@ require "shellwords"
 class PrivateEye::Compare
   attr_reader :test_data, :screen, :step_data, :title_of_test, :site, :name
 
-  def initialize(test_data, step_data, name: nil)
+  def initialize(test_data, step_data, name = nil)
     @test_data = test_data
     @step_data = step_data
     @screen = test_data.display_allocation.screen_id
     @title_of_test = step_data.title
     @site = test_data.site
-    @name = name.prepend('(') << ')' unless name.nil?
+    @name = name unless name.nil?
   end
 
   def run
@@ -23,13 +23,13 @@ class PrivateEye::Compare
   def compare
     base = "test_library/private_eye/#{site}/#{title_of_test}/base#{name}.png"
     compare = "test_library/private_eye/#{site}/#{title_of_test}/compare#{name}.png"
-    diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff.png#{name}")
-    info = base.gsub(/([a-zA-Z0-9]+).png$/, "data.txt#{name}")
+    diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff#{name}.png")
+    info = base.gsub(/([a-zA-Z0-9]+).png$/, "data#{name}.txt")
     compare_images(base, compare, diff, info)
   end
 
   def passed?
-    outcome = File.read("test_library/private_eye/#{site}/#{title_of_test}/data.txt").to_f
+    outcome = File.read("test_library/private_eye/#{site}/#{title_of_test}/data#{name}.txt").to_f
     if outcome < 5
       puts 'Images within tolerance'
       true
@@ -48,16 +48,16 @@ class PrivateEye::Compare
 
   def file_path
     base_path = "test_library/private_eye/#{site}/#{title_of_test}/"
-
-    if File.exist?(base_path + '/base.png')
-      name = 'compare.png'
+    binding.pry
+    if File.exist?(base_path + "/base#{name}.png")
+      file_name = "compare#{name}.png"
     else
       FileUtils.mkdir_p(base_path)
-      name = 'base.png'
+      file_name = "base#{name}.png"
       puts 'No image found. Capturing base image now.'
     end
 
-    base_path + name
+    base_path + file_name
   end
 
   def calculate_percentage(img_size, px_value, info)
