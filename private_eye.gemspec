@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     'Rakefile',
     'lib/private_eye.rb',
     'lib/private_eye/version.rb',
+    'lib/private_eye/compare.rb',
     'private_eye.gemspec',
     'spec/private_eye_spec.rb'
   ]
