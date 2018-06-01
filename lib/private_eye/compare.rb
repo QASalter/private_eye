@@ -3,14 +3,15 @@ require "open3"
 require "shellwords"
 
 class PrivateEye::Compare
-  attr_reader :test_data, :screen, :step_data, :title_of_test, :site
+  attr_reader :test_data, :screen, :step_data, :title_of_test, :site, :name
 
-  def initialize(test_data, step_data)
+  def initialize(test_data, step_data, name: nil)
     @test_data = test_data
     @step_data = step_data
     @screen = test_data.display_allocation.screen_id
     @title_of_test = step_data.title
     @site = test_data.site
+    @name = name.prepend('(') << ')' unless name.nil?
   end
 
   def run
@@ -20,10 +21,10 @@ class PrivateEye::Compare
   end
 
   def compare
-    base = "test_library/private_eye/#{site}/#{title_of_test}/base.png"
-    compare = "test_library/private_eye/#{site}/#{title_of_test}/compare.png"
-    diff = base.gsub(/([a-zA-Z0-9]+).png$/, 'diff.png')
-    info = base.gsub(/([a-zA-Z0-9]+).png$/, 'data.txt')
+    base = "test_library/private_eye/#{site}/#{title_of_test}/base#{name}.png"
+    compare = "test_library/private_eye/#{site}/#{title_of_test}/compare#{name}.png"
+    diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff.png#{name}")
+    info = base.gsub(/([a-zA-Z0-9]+).png$/, "data.txt#{name}")
     compare_images(base, compare, diff, info)
   end
 
