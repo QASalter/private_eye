@@ -6,7 +6,7 @@ require 'private_eye/version'
 Gem::Specification.new do |s|
   # general infos
   s.name        = 'private_eye'
-  s.version     = "0.0.3"
+  s.version     = PrivateEye::VERSION
   s.description = 'Simple visual regression check for QATS'
   s.homepage    = 'http://github.com/QASalter/private_eye'
   s.summary     = s.description

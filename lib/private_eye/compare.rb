@@ -48,7 +48,6 @@ class PrivateEye::Compare
 
   def file_path
     base_path = "test_library/private_eye/#{site}/#{title_of_test}/"
-    binding.pry
     if File.exist?(base_path + "/base#{name}.png")
       file_name = "compare#{name}.png"
     else
