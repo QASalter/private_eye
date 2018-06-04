@@ -17,6 +17,7 @@ class PrivateEye::Compare
   def run
     screenshot
     compare
+    save_to_report
     passed?
   end
 
@@ -26,6 +27,13 @@ class PrivateEye::Compare
     diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff#{name}.png")
     info = base.gsub(/([a-zA-Z0-9]+).png$/, "data#{name}.txt")
     compare_images(base, compare, diff, info)
+  end
+
+  def save_to_report
+    path = "test_library/screenshots/#{test_data.id}/#{test_data.current_test}/private_eye/"
+    FileUtils.mkdir_p(path)
+    copy_from = "test_library/private_eye/#{site}/#{title_of_test}/"
+    FileUtils.cp_r(copy_from, path)
   end
 
   def passed?
