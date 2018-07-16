@@ -22,22 +22,22 @@ class PrivateEye::Compare
   end
 
   def compare
-    base = "test_library/private_eye/#{site}/#{title_of_test}/base#{name}.png"
-    compare = "test_library/private_eye/#{site}/#{title_of_test}/compare#{name}.png"
+    base = "public/screenshots/private_eye/#{site}/#{title_of_test}/base#{name}.png"
+    compare = "public/screenshots/private_eye/#{site}/#{title_of_test}/compare#{name}.png"
     diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff#{name}.png")
     info = base.gsub(/([a-zA-Z0-9]+).png$/, "data#{name}.txt")
     compare_images(base, compare, diff, info)
   end
 
   def save_to_report
-    path = "test_library/screenshots/#{test_data.id}/#{test_data.current_test}/private_eye/"
+    path = "public/screenshots/#{test_data.id}/#{test_data.current_test}/private_eye/"
     FileUtils.mkdir_p(path)
-    copy_from = "test_library/private_eye/#{site}/#{title_of_test}/"
+    copy_from = "public/screenshots/private_eye/#{site}/#{title_of_test}/"
     FileUtils.cp_r(copy_from, path)
   end
 
   def passed?
-    outcome = File.read("test_library/private_eye/#{site}/#{title_of_test}/data#{name}.txt").to_f
+    outcome = File.read("public/private_eye/#{site}/#{title_of_test}/data#{name}.txt").to_f
     if outcome < 5
       puts 'Images within tolerance'
       true
@@ -55,7 +55,7 @@ class PrivateEye::Compare
   end
 
   def file_path
-    base_path = "test_library/private_eye/#{site}/#{title_of_test}/"
+    base_path = "public/screenshots/private_eye/#{site}/#{title_of_test}/"
     if File.exist?(base_path + "/base#{name}.png")
       file_name = "compare#{name}.png"
     else
