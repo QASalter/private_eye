@@ -8,7 +8,7 @@ module PrivateEye
 
     MAJOR     = 0
     MINOR     = 0
-    TINY      = 6
+    TINY      = 7
     SIGNATURE = [MAJOR, MINOR, TINY]
     STRING    = SIGNATURE.join '.'
 

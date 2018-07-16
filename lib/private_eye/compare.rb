@@ -37,7 +37,7 @@ class PrivateEye::Compare
   end
 
   def passed?
-    outcome = File.read("public/private_eye/#{site}/#{title_of_test}/data#{name}.txt").to_f
+    outcome = File.read("public/screenshots/private_eye/#{site}/#{title_of_test}/data#{name}.txt").to_f
     if outcome < 5
       puts 'Images within tolerance'
       true
